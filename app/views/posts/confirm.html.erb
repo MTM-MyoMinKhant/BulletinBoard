@@ -1,0 +1,18 @@
+<div class="middle">
+  <h2>Create Post</h2>
+  <div class="center">
+    <%= form_with model: @post, method: :get do |form| %>
+        <div class="field row form-adj">
+            <%= form.label :title , "Title :" , class: "col-md-4" %><br />
+            <%= form.text_field :title, autofocus: true, autocomplete: "title" , class: "col-md-8" %>
+        </div>
+        <div class="field row form-adj">
+            <%= form.label :description , "Description :" , class: "col-md-5" %><br />
+            <%= form.text_field :description, autofocus: true, autocomplete: "description" , class: "col-md-7" %>
+        </div>
+        
+        <%= link_to "Back", posts_path , class: "right btn btn-secondary" %>
+        <%= form.submit "Submit" , class: "right btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

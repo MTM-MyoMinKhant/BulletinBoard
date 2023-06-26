@@ -5,12 +5,67 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://kit.fontawesome.com/3f5139a7c1.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "bootstrap", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "bootstrap.min", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "style", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <header class="header-bg">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6 clearfix">
+            <h3><%= link_to "Bulletin_Board" , users_path , class: "link left"%></h3>
+            <% if user_signed_in? %>
+              <% if @user.role == 0 %>
+                <%= link_to "Users" , users_user_lists_path , class: "link hsub-link h-adj left"%>
+                <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
+              <% elsif @user.role == 1 %>
+                <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
+              <% else %>
+                <p class="link hsub-link h-adj left">underfined role</p>
+              <% end %>
+            <% else %>
+              <%= link_to "Need to sign in" , users_path , class: "link hsub-link h-adj left"%>
+            <% end %>
+          </div>
+          <div class="col-6 clearfix">
+            <% if user_signed_in? %>
+              <p id="user_account" class="link hsub-link right"> <%= @user.name %> <i class="fa-solid fa-user right icon res"></i></p>
+              <%= link_to "Create User" , users_path , class: "link hsub-link right"%>
+            <% else %>
+              <%= link_to "Log In" , new_user_session_path , class: "link hsub-link  right"%>
+              <%= link_to "Sign In" , new_user_registration_path , class: "link hsub-link right"%>
+            <% end %>
+            <div class="abs profile-info none">
+              <%= link_to "Profile" , user_path(1) , class: "link hsub-link h-adj"%></hr>
+              <%= link_to "Log Out" , destroy_user_session_path , class: "link hsub-link h-adj" , "data-turbo-method": :delete %>
+            </div>             
+          </div>
+        </div>
+      </div>
+    </header>
     <%= yield %>
+    <footer class="header-bg">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6 clearfix">
+            <h3><%= link_to "METATEAM Myanmar" , users_path , class: "link left "%></h3>
+          </div>
+          <div class="col-6 clearfix">
+            <p class="link hsub-link right">
+              Copyright &#169; Seattle Consulting Myanmar Co., Ltd. All rights reserved
+            </p>       
+          </div>
+        </div>
+      </div>
+    </footer>
+    <%= javascript_include_tag 'bootstrap.bundle' %>
+    <%= javascript_include_tag 'bootstrap.bundle.min' %>
+    <%= javascript_include_tag 'jquery' %>
+    <%= javascript_include_tag 'custom' %>
   </body>
 </html>

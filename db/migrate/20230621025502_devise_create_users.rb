@@ -7,12 +7,13 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
-      t.string :profile , limit: 255
-      t.integer :type
+      t.integer :role
       t.integer :phone
       t.string :address , limit: 255
       t.date :dob
-
+      t.belongs_to :create_user, foreign_key: { to_table: :users }
+      t.belongs_to :updated_user, foreign_key: { to_table: :users }
+      t.belongs_to :deleted_user, foreign_key: { to_table: :users } 
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
@@ -40,6 +41,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
 
 
       t.timestamps null: false
+      t.datetime :deleted_at 
     end
 
     add_index :users, :email,                unique: true

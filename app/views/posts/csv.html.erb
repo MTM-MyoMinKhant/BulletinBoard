@@ -1,0 +1,14 @@
+<div class="middle">
+  <h2>Upload Csv File</h2>
+  <div class="center">
+    <%= form_with model: @post, method: :get do |form| %>
+        <div class="field row form-adj">
+            <%= form.label :csv , "Upload Csv File :" , class: "col-md-4" %><br />
+            <%= form.file_field :csv, autofocus: true, class: "col-md-8" %>
+        </div>
+
+        <%= link_to "Back", posts_path , class: "right btn btn-secondary" %>
+        <%= form.submit "Submit" , class: "right btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

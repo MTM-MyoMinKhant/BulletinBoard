@@ -1,29 +1,24 @@
 <div class="middle">
-  <h2>Sign up</h2>
+  <h2>Register Confirm</h2>
   <div class="center">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
       <div class="field row form-adj">
         <%= f.label :name , "Name :" , class: "col-md-4" %><br />
-        <%= f.text_field :name, autofocus: true, class: "col-md-8" %>
-        <% if resource.errors[:name].any? %>
-            <p class="error"><%= resource.errors.full_messages_for(:name).first %></p>
-        <% end %>
+        <%= f.text_field :name, autofocus: true, class: "col-md-8", value: "MMK", readonly: true %>
       </div>
     
       <div class="field row form-adj">
         <%= f.label :email , "Email :" , class: "col-md-4" %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: "col-md-8" %>
-        <% if resource.errors[:email].any? %>
-            <p class="error"><%= resource.errors.full_messages_for(:email).first %></p>
-        <% end %>
       </div>
     
       <div class="field row form-adj">
-        <%= f.label :password , "Password :" , class: "col-md-4" %>
+        <div class="col-md-4">
+          <%= f.label :password , "Password :" %>
+        </div>
         <%= f.password_field :password, autocomplete: "new-password" , class: "col-md-8" %>
-        <% if resource.errors[:password].any? %>
-            <p class="error"><%= resource.errors.full_messages_for(:password).first %></p>
-        <% end %>
       </div>
     
       <div class="field row form-adj">
@@ -36,34 +31,27 @@
       <div class="field row form-adj">
         <%= f.label :phone , "Phone :" , class: "col-md-4" %><br />
         <%= f.text_field :phone, autofocus: true, class: "col-md-8" %>
-        <% if resource.errors[:phone].any? %>
-            <p class="error"><%= resource.errors.full_messages_for(:phone).first %></p>
-        <% end %>
       </div>
 
       <div class="field row form-adj">
         <%= f.label :dob , "Date Of Birth :" , class: "col-md-4" %><br />
         <%= f.date_field :dob, autofocus: true, class: "col-md-8" %>
-        <% if resource.errors[:dob].any? %>
-            <p class="error"><%= resource.errors.full_messages_for(:dob).first %></p>
-        <% end %>
       </div>
 
       <div class="field row form-adj">
         <%= f.label :address , "Address :" , class: "col-md-4" %><br />
         <%= f.text_field :address, autofocus: true, class: "col-md-8" %>
-        <% if resource.errors[:address].any? %>
-            <p class="error"><%= resource.errors.full_messages_for(:address).first %></p>
-        <% end %>
       </div>
 
       <div class="field row form-adj">
-        <%= f.label :avatar , "profile :" , class: "col-md-4" %><br />
-        <%= f.file_field :avatar, autofocus: true, class: "col-md-8" %>
+        <%= f.label :profile , "profile :" , class: "col-md-4" %><br />
+        <%= f.file_field :profile, autofocus: true, class: "col-md-8" %>
       </div>
     
-      <%= button_tag "Clear", type: "reset" , class: "right btn btn-secondary" %>
-      <%= f.submit "Confirm" , class: "right btn btn-primary" %>
+      <div class="actions">
+        <%= link_to "Back", new_user_session_path , class: "right btn btn-secondary" %>
+        <%= f.submit "Confirm" , class: "right btn btn-primary" %>
+      </div>
     <% end %>
   </div>
 </div>

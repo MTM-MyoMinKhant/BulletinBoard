@@ -1,0 +1,52 @@
+<div class="middle">
+  <h2>Sign up</h2>
+  <div class="center">
+    <%= form_with model: @user, method: :get do |form| %>
+      <div class="field row form-adj">
+        <%= form.label :name , "Name :" , class: "col-md-4" %><br />
+        <%= form.text_field :name, autofocus: true, class: "col-md-8" %>
+      </div>
+    
+      <div class="field row form-adj">
+        <%= form.label :email , "Email :" , class: "col-md-4" %><br />
+        <%= form.email_field :email, autofocus: true, autocomplete: "email" , class: "col-md-8" %>
+      </div>
+
+      <%# <%= form.hidden_field :type, value: 1 %> 
+
+      <div class="field row form-adj">
+        <%= form.label :phone , "Phone :" , class: "col-md-4" %><br />
+        <%= form.text_field :phone, autofocus: true, class: "col-md-8" %>
+      </div>
+
+      <div class="field row form-adj">
+        <%= form.label :dob , "Date Of Birth :" , class: "col-md-4" %><br />
+        <%= form.date_field :dob, autofocus: true, class: "col-md-8" %>
+      </div>
+
+      <div class="field row form-adj">
+        <%= form.label :address , "Address :" , class: "col-md-4" %><br />
+        <%= form.text_field :address, autofocus: true, class: "col-md-8" %>
+      </div>
+
+      <div class="field row form-adj">
+        <%= form.label :profile , "Old profile :" , class: "col-md-4" %><br />
+        <%= form.file_field :profile, autofocus: true, class: "col-md-8" %>
+      </div>
+
+      <div class="field row form-adj">
+        <%= form.label :profile , "profile :" , class: "col-md-4" %><br />
+        <%= form.file_field :profile, autofocus: true, class: "col-md-8" %>
+      </div>
+        
+      <%= link_to "change password", "/users/1/change_password" , class: "right link2 cpl" %>
+      <%= link_to "Back", new_user_session_path , class: "right btn btn-secondary" %>
+      <%= form.submit "Submit" , class: "right btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+

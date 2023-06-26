@@ -1,0 +1,115 @@
+<div class="middle2 clearfix">
+    <h2>User Lists</h2>   
+    <%= search_form_for @q do |f| %>
+        <%= f.label :name_cont , "Name :" %>
+        <%= f.search_field :name_cont %>
+        <%= f.label :email_cont , "Email :" %>
+        <%= f.search_field :email_cont %>
+        <%= f.label :from_cont , "From :" %>
+        <%= f.date_field :from_cont %>
+        <%= f.label :to , "To :" %>
+        <%= f.date_field :to %>
+        <%= f.submit "Search" , class: "post-action-btn btn" %>
+    <% end %>
+    <table class="table post-table">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Created User</th>
+                <th scope="col">Type</th> 
+                <th scope="col">Phone</th>
+                <th scope="col">Date Of Birth</th>
+                <th scope="col">Address</th>
+                <th scope="col">Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users_list.each do |user_list| %>
+                <tr>
+                    <td><%= user_list.id %></td>
+                    <td><%= user_list.name %></td>
+                    <td><%= user_list.email %></td>
+                    <td>Zaw Zaw</td>
+                    <td>
+                        <% if user_list.role == 0 %>
+                            Admin
+                        <% elsif user_list.role == 1 %>
+                            User
+                        <% else %>
+                            Undefined
+                        <% end %>
+                    </td>
+                    <td>0<%= user_list.phone %></td>
+                    <td><%= user_list.dob %></td>
+                    <td><%= user_list.address %></td>
+                    <td>
+                        <%= button_tag "Detail", type: "button", id: "d2u-s" ,  class: "btn btn-success"%>
+                        <%= button_tag "Delete", type: "button", id: "du-s" ,  class: "btn btn-danger"%>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <%= will_paginate @users_list %>
+</div>
+
+<div id="delete-user" class="action-post du-n">
+    <h4>Delete Confirm</h4><hr>
+    <h6>Are you sure to delete User?</h6>
+    <div class="row">
+        <div class="left col-5">
+            <p>No :</p>
+            <p>Name :</p>
+            <p>Email :</p>
+            <p>Created User :</p>
+            <p>Type :</p> 
+            <p>Phone :</p>
+            <p>Date Of Birth :</p>
+            <p>Address :</p>
+        </div>
+        <div class="left col-7">
+            <p>1</p>
+            <p>Mg Mg</p>
+            <p>mgmg@gmail.com</p>
+            <p>Zaw Zaw</p>
+            <p>Admin</p>
+            <p>09-123456</p>
+            <p>3-6-1999</p>
+            <p>Kan Daw Lay</p>
+        </div>
+    </div><hr>
+    <%= form_with model: @user, method: :get do |form| %>
+        <%= button_tag "Close", type: "button", id: "du-n" , class: "right btn btn-secondary"%>
+        <%= form.submit "Submit" , class: "right btn btn-danger" %>
+    <% end %>
+</div>
+
+<div id="detail-user" class="action-post d2u-n">
+    <h4>Post User</h4><hr>
+    <div class="row">
+        <div class="left col-5">
+            <p>No :</p>
+            <p>Name :</p>
+            <p>Email :</p>
+            <p>Created User :</p>
+            <p>Type :</p> 
+            <p>Phone :</p>
+            <p>Date Of Birth :</p>
+            <p>Address :</p>
+        </div>
+        <div class="left col-7">
+            <p>1</p>
+            <p>Mg Mg</p>
+            <p>mgmg@gmail.com</p>
+            <p>Zaw Zaw</p>
+            <p>Admin</p>
+            <p>09-123456</p>
+            <p>3-6-1999</p>
+            <p>Kan Daw Lay</p>
+        </div>
+    </div><hr>
+    <%= button_tag "Close", type: "button", id: "d2u-n" , class: "right btn btn-secondary"%>
+</div>
+

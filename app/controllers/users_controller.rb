@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    require 'will_paginate/array'
     def index
         @user = current_user
         if @user.role == 0
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
     def user_lists
         @user = current_user
         @q = User.ransack(params[:q])
-        @users_list = @q.result.page(params[:page])
+        @users_list = @q.result.to_a.paginate(page: params[:page], per_page: 2)
     end
 
     def show

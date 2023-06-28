@@ -16,5 +16,5 @@ class User < ApplicationRecord
   validates :phone, presence: true , numericality: { message: "must be a number" }
   validates :dob, presence: true 
   validates :address, presence: true 
-  validates :avatar, format: { with: /\.(png|jpg|jpeg|gif)\z/i, message: "only allows PNG, JPG, JPEG, and GIF images" }
+  validates :avatar, format: { with: /\.(png|jpg|jpeg|gif|avif|webp|jfif)\z/i, message: "only images files are allowed" }, allow_blank: true
 end

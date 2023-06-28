@@ -15,8 +15,11 @@ Rails.application.routes.draw do
   resources :users
   resources :admin
   get 'posts/confirm' , to: 'posts#confirm'
-  get 'posts/id/edit/confirm' , to: 'posts#edit_confirm'
+  post 'posts/confirm_post' , to: 'posts#confirm_post'
+  get 'posts/:id/edit/confirm' , to: 'posts#edit_confirm' , as: 'edit_confirm'
+  post 'posts/:id/edit/comfirm_post', to: 'posts#edit_confirm_post', as: 'confirm_post'
   get 'posts/csv' , to: 'posts#csv'
+  put 'posts/:id/update' , to: 'posts#update' , as: 'post_update'
   resources :posts
 end
 

@@ -60,6 +60,9 @@
       <div class="field row form-adj">
         <%= f.label :avatar , "profile :" , class: "col-md-4" %><br />
         <%= f.file_field :avatar, autofocus: true, class: "col-md-8" %>
+        <% if resource.errors[:avatar].any? %>
+            <p class="error"><%= resource.errors.full_messages_for(:avatar).first %></p>
+        <% end %>
       </div>
     
       <%= button_tag "Clear", type: "reset" , class: "right btn btn-secondary" %>

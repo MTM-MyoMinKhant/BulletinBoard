@@ -29,13 +29,12 @@
                 <p class="link hsub-link h-adj left">underfined role</p>
               <% end %>
             <% else %>
-              <%= link_to "Need to sign in" , users_path , class: "link hsub-link h-adj left"%>
+        
             <% end %>
           </div>
           <div class="col-6 clearfix">
             <% if user_signed_in? %>
               <p id="user_account" class="link hsub-link right"> <%= @user.name %> <i class="fa-solid fa-user right icon res"></i></p>
-              <%= link_to "Create User" , users_path , class: "link hsub-link right"%>
             <% else %>
               <%= link_to "Log In" , new_user_session_path , class: "link hsub-link  right"%>
               <%= link_to "Sign In" , new_user_registration_path , class: "link hsub-link right"%>
@@ -57,7 +56,7 @@
           </div>
           <div class="col-6 clearfix">
             <p class="link hsub-link right">
-              Copyright &#169; Seattle Consulting Myanmar Co., Ltd. All rights reserved
+              Copyright &#169; METATEAM Myanmar Co., Ltd. All rights reserved
             </p>       
           </div>
         </div>

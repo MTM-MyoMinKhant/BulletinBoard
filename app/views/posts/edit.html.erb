@@ -1,22 +1,31 @@
 <div class="middle">
   <h2>Edit Post</h2>
   <div class="center">
-    <%= form_with model: @post, method: :get do |form| %>
+    <%= form_with model: @post, url: confirm_post_path(@post) , method: :post do |form| %>
         <div class="field row form-adj">
             <%= form.label :title , "Title :" , class: "col-md-4" %><br />
             <%= form.text_field :title, autofocus: true, autocomplete: "title" , class: "col-md-8" %>
+            <% if @post.errors[:title].any? %>
+              <div class="error"><%= @post.errors.full_messages_for(:title).first %></div>
+            <% end %>
         </div>
         <div class="field row form-adj">
             <%= form.label :description , "Description :" , class: "col-md-5" %><br />
             <%= form.text_field :description, autofocus: true, autocomplete: "description" , class: "col-md-7" %>
+            <% if @post.errors[:description].any? %>
+              <div class="error"><%= @post.errors.full_messages_for(:description).first %></div>
+            <% end %>
         </div>
+        <%= form.hidden_field :create_user_id, value: @post.create_user_id %> 
+        <%= form.hidden_field :updated_user_id, value: @user.id %> 
 
         <div class="form-check form-switch clearfix">
-            <label class="form-check-label left col-md-5" for="flexSwitchCheckDefault">Statue :</label>
-            <input class="form-check-input right col-md-7 " type="checkbox" role="switch" id="flexSwitchCheckDefault">            
+          <%= form.label :status, "Status:", class: "form-check-label left col-md-5" %> 
+          <%= form.check_box :status, { class: "form-check-input right col-md-7" }%>
         </div>
+
         <%= button_tag "Clear", type: "reset" , class: "right btn btn-secondary" %>
-        <%= link_to "Confirm", posts_id_edit_confirm_path , class: "right btn btn-primary" %>
+        <%= form.submit "Submit" , class: "right btn btn-primary" %>
     <% end %>
   </div>
 </div>

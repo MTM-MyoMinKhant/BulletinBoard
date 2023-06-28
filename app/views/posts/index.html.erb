@@ -3,9 +3,9 @@
     <%= link_to "Download" , users_path , class: "right post-action-btn btn"%>  
     <%= link_to "Upload" , posts_csv_path   , class: "right post-action-btn btn"%>
     <%= link_to "Create" , users_path   , class: "right post-action-btn btn"%>
-    <%= form_with model: @post, method: :get, html: { class: "right" } do |form| %>
-        <%= form.search_field :name %>
-        <%= form.submit "Search" , class: "post-action-btn btn" %>
+    <%= search_form_for @q , html: { class: "right" } do |f| %>
+        <%= f.search_field :title_or_description_cont %>
+        <%= f.submit "Search" , class: "post-action-btn btn" %>
     <% end %>
     <table class="table post-table">
         <thead>
@@ -18,74 +18,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <%=link_to "Edit" , edit_post_path(1) , class: "btn btn-secondary" %>
-                    <%= button_tag "Detail", type: "button", id: "d2p-s" ,  class: "btn btn-success"%>
-                    <%= button_tag "Delete", type: "button", id: "dp-s" ,  class: "btn btn-danger"%>
-                </td>
-            </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <%=link_to "Edit" , edit_post_path(1) , class: "btn btn-secondary" %>
-                    <%= button_tag "Detail", type: "button", id: "d2p-s" ,  class: "btn btn-success"%>
-                    <%= button_tag "Delete", type: "button", id: "dp-s" ,  class: "btn btn-danger"%>
-                </td>
-            </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <%=link_to "Edit" , edit_post_path(1) , class: "btn btn-secondary" %>
-                    <%= button_tag "Detail", type: "button", id: "d2p-s" ,  class: "btn btn-success"%>
-                    <%= button_tag "Delete", type: "button", id: "dp-s" ,  class: "btn btn-danger"%>
-                </td>
-            </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <%=link_to "Edit" , edit_post_path(1) , class: "btn btn-secondary" %>
-                    <%= button_tag "Detail", type: "button", id: "d2p-s" ,  class: "btn btn-success"%>
-                    <%= button_tag "Delete", type: "button", id: "dp-s" ,  class: "btn btn-danger"%>
-                </td>
-            </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <%=link_to "Edit" , edit_post_path(1) , class: "btn btn-secondary" %>
-                    <%= button_tag "Detail", type: "button", id: "d2p-s" ,  class: "btn btn-success"%>
-                    <%= button_tag "Delete", type: "button", id: "dp-s" ,  class: "btn btn-danger"%>
-                </td>
-            </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <%=link_to "Edit" , edit_post_path(1) , class: "btn btn-secondary" %>
-                    <%= button_tag "Detail", type: "button", id: "d2p-s" ,  class: "btn btn-success"%>
-                    <%= button_tag "Delete", type: "button", id: "dp-s" ,  class: "btn btn-danger"%>
-                </td>
-            </tr>
+            <% @posts.each do |post| %>
+                <tr>
+                    <td><%= post.title %></td>
+                    <td><%= post.description %></td>
+                    <td><%= post.create_user.name %></td>
+                    <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
+                    <td>
+                        <%=link_to "Edit" , edit_post_path(post.id) , class: "btn btn-secondary" %>
+                        <%= button_tag "Detail", type: "button", id: "d2p-s" , class: "btn btn-success" , data: { post_id: post.id }%>
+                        <%= button_tag "Delete", type: "button", id: "dp-s" , class: "btn btn-danger"%>
+                    </td>
+                </tr>
+            <% end %>
         </tbody>
     </table>
+    <%= will_paginate @posts %>
 </div>
 
 <div id="delete-post" class="action-post dp-n">
@@ -112,7 +60,7 @@
 </div>
 
 <div id="detail-post" class="action-post d2p-n">
-    <h4>Post Detail</h4><hr>
+    <h4>Post Detail</h4>
     <div class="row">
         <div class="left col-5">
             <p>Id : </p>

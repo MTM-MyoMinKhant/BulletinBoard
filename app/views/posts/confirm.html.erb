@@ -1,16 +1,20 @@
 <div class="middle">
   <h2>Create Post</h2>
   <div class="center">
-    <%= form_with model: @post, method: :get do |form| %>
+    <%= form_with model: @post do |form| %>
         <div class="field row form-adj">
             <%= form.label :title , "Title :" , class: "col-md-4" %><br />
-            <%= form.text_field :title, autofocus: true, autocomplete: "title" , class: "col-md-8" %>
+            <%= form.text_field :title, value: @post.title, readonly: true , class: "col-md-8" %>
         </div>
         <div class="field row form-adj">
             <%= form.label :description , "Description :" , class: "col-md-5" %><br />
-            <%= form.text_field :description, autofocus: true, autocomplete: "description" , class: "col-md-7" %>
+            <%= form.text_field :description , value: @post.description, readonly: true , readonly: true , class: "col-md-7" %>
         </div>
-        
+
+        <%= form.hidden_field :status, value: @post.status %>
+        <%= form.hidden_field :create_user_id, value: @post.create_user_id %> 
+        <%= form.hidden_field :updated_user_id, value: @post.updated_user_id %>
+
         <%= link_to "Back", posts_path , class: "right btn btn-secondary" %>
         <%= form.submit "Submit" , class: "right btn btn-primary" %>
     <% end %>

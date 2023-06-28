@@ -1,26 +1,26 @@
 <div class="middle">
   <h2>Create Post</h2>
   <div class="center">
-    <%= form_with model: @post do |form| %>
+    <%= form_with model: @post, url: posts_confirm_post_path, method: :post do |form| %>
         <div class="field row form-adj">
             <%= form.label :title , "Title :" , class: "col-md-4" %><br />
             <%= form.text_field :title, autofocus: true, autocomplete: "title" , class: "col-md-8" %>
             <% if @post.errors[:title].any? %>
-              <div><%= @post.errors.full_messages_for(:title).first %></div>
+              <div class="error"><%= @post.errors.full_messages_for(:title).first %></div>
             <% end %>
         </div>
         <div class="field row form-adj">
             <%= form.label :description , "Description :" , class: "col-md-5" %><br />
             <%= form.text_field :description, autofocus: true, autocomplete: "description" , class: "col-md-7" %>
             <% if @post.errors[:description].any? %>
-              <div><%= @post.errors.full_messages_for(:description).first %></div>
+              <div class="error"><%= @post.errors.full_messages_for(:description).first %></div>
             <% end %>
         </div>
-        <%= form.text_field :create_user_id, value: @user.id %> 
-        <%= form.text_field :updated_user_id, value: @user.id %> 
+        <%= form.hidden_field :status, value: 1 %>
+        <%= form.hidden_field :create_user_id, value: @user.id %> 
+        <%= form.hidden_field :updated_user_id, value: @user.id %> 
 
         <%= button_tag "Clear", type: "reset" , class: "right btn btn-secondary" %>
-        <%= link_to "Confirm", posts_confirm_path , class: "right btn btn-primary" %>
         <%= form.submit "Submit" , class: "right btn btn-primary" %>
     <% end %>
   </div>

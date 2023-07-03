@@ -18,6 +18,7 @@
             </tr>
         </thead>
         <tbody>
+        
             <% @posts.each do |post| %>
                 <tr>
                     <td><%= post.title %></td>
@@ -26,7 +27,13 @@
                     <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
                     <td>
                         <%=link_to "Edit" , edit_post_path(post.id) , class: "btn btn-secondary" %>
-                        <%= button_tag "Detail", type: "button", id: "d2p-s" , class: "btn btn-success" , data: { post_id: post.id }%>
+                        <% detail_button_attributes = {
+                            type: "button",
+                            id: "d2p-s",
+                            class: "btn btn-success",
+                            onclick: "showDetail('#{post.title}', '#{post.description}', '#{post.create_user.name}', '#{post.created_at.strftime("%Y-%m-%d")}')"
+                        } %>
+                        <%= button_tag "Detail", detail_button_attributes %>
                         <%= button_tag "Delete", type: "button", id: "dp-s" , class: "btn btn-danger"%>
                     </td>
                 </tr>
@@ -69,10 +76,10 @@
             <p>Status : </p>
         </div>
         <div class="left col-7">
-            <p>2</p>
-            <p>Post 2</p>
-            <p>Post Description</p>
-            <p>Active</p>
+            <p id="detail-id"></p>
+            <p id="detail-title"></p>
+            <p id="detail-description"></p>
+            <p id="detail-status"></p>
         </div>
     </div><hr>
     <%= button_tag "Close", type: "button", id: "d2p-n" , class: "right btn btn-secondary"%>

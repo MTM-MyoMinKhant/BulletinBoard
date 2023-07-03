@@ -18,30 +18,15 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-6 clearfix">
-            <h3><%= link_to "Bulletin_Board" , users_path , class: "link left"%></h3>
-            <% if user_signed_in? %>
-              <% if @user.role == 0 %>
-                <%= link_to "Users" , users_user_lists_path , class: "link hsub-link h-adj left"%>
-                <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
-              <% elsif @user.role == 1 %>
-                <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
-              <% else %>
-                <p class="link hsub-link h-adj left">underfined role</p>
-              <% end %>
-            <% else %>
-        
-            <% end %>
+            <h3><%= link_to "Bulletin_Board" , users_path , class: "link left"%></h3>       
+            <%= link_to "Users" , users_user_lists_path , class: "link hsub-link h-adj left"%>
+            <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
           </div>
-          <div class="col-6 clearfix">
-            <% if user_signed_in? %>
-              <p id="user_account" class="link hsub-link right"> <%= @user.name %> <i class="fa-solid fa-user right icon res"></i></p>
-            <% else %>
-              <%= link_to "Log In" , new_user_session_path , class: "link hsub-link  right"%>
-              <%= link_to "Sign In" , new_user_registration_path , class: "link hsub-link right"%>
-            <% end %>
+          <div class="col-6 clearfix">  
+            <p id="user_account" class="link hsub-link right"> Testing Name <i class="fa-solid fa-user right icon res"></i></p>
             <div class="abs profile-info none">
               <%= link_to "Profile" , user_path(1) , class: "link hsub-link h-adj"%></hr>
-              <%= link_to "Log Out" , destroy_user_session_path , class: "link hsub-link h-adj" , "data-turbo-method": :delete %>
+              <%= link_to "Log Out" , "#" , class: "link hsub-link h-adj" , "data-turbo-method": :delete %>
             </div>             
           </div>
         </div>

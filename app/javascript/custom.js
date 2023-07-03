@@ -47,3 +47,16 @@ $(document).ready(function() {
         $("#detail-user").addClass("d2u-n");
     });
 });
+
+function showDetail(title, description, creator, createdDate) {
+    console.log("Clicked detail with data:");
+    console.log("Title:", title);
+    console.log("Description:", description);
+    console.log("Creator:", creator);
+    console.log("Created Date:", createdDate);
+    $("#detail-id").append(title);
+    $("#detail-title").append(description);
+    $("#detail-description").append(creator);
+    $("#detail-statue").append(createdDate);
+    // Use the data as needed
+}

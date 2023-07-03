@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)
-    ["name", "email" , "dob" ] # Add any other attributes you want to make searchable
+    ["name", "email" , "dob"] # Add any other attributes you want to make searchable
   end
   validates :name, presence: true 
   validates :email, presence: true , uniqueness: true

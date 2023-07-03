@@ -1,17 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    registrations: 'users/registrations'
-  }
+  # devise_for :users, controllers: {
+  #   registrations: 'users/registrations'
+  # }
 
   # Specify the scope for the confirm route
-  devise_scope :user do
-    get 'users/confirm', to: 'users/registrations#confirm'
-  end
+  # devise_scope :user do
+  #   get 'users/confirm', to: 'users/registrations#confirm'
+  # end
 
   # Defines the root path route ("/")
   root "users#index"
   get 'users/user_lists' , to: 'users#user_lists'
   get 'users/:id/change_password' , to: 'users#change_password'
+  get 'users/confirm' , to: 'users#confirm'
+  post 'users/confirm_post' , to: 'users#confirm_post'
   resources :users
   resources :admin
   get 'posts/confirm' , to: 'posts#confirm'

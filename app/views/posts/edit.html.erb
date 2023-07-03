@@ -17,7 +17,7 @@
             <% end %>
         </div>
         <%= form.hidden_field :create_user_id, value: @post.create_user_id %> 
-        <%= form.hidden_field :updated_user_id, value: @user.id %> 
+        <%= form.hidden_field :updated_user_id, value: 1 %> 
 
         <div class="form-check form-switch clearfix">
           <%= form.label :status, "Status:", class: "form-check-label left col-md-5" %> 

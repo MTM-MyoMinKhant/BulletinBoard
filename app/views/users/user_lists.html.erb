@@ -1,14 +1,14 @@
 <div class="middle2 clearfix">
     <h2>User Lists</h2>   
-    <%= search_form_for @q do |f| %>
+    <%= search_form_for @q ,url: users_user_lists_path, html: { method: :get ,  class: "right" } do |f| %>
         <%= f.label :name_cont , "Name :" %>
         <%= f.search_field :name_cont %>
         <%= f.label :email_cont , "Email :" %>
         <%= f.search_field :email_cont %>
-        <%= f.label :dob_cont , "From :" %>
-        <%= f.date_field :dob_cont %>
-        <%= f.label :dob_cont , "To :" %>
-        <%= f.date_field :dob_cont %>
+        <%= f.label :dob_gteq , "From :" %>
+        <%= f.date_field :dob_gteq %>
+        <%= f.label :dob_lteq , "To :" %>
+        <%= f.date_field :dob_lteq %>
         <%= f.submit "Search" , class: "post-action-btn btn" %>
     <% end %>
     <table class="table post-table">
@@ -45,6 +45,7 @@
                     <td><%= user_list.dob %></td>
                     <td><%= user_list.address %></td>
                     <td>
+                        <%= link_to "Edit" , edit_user_path(user_list.id) , class: "btn btn-secondary"%>
                         <%= button_tag "Detail", type: "button", id: "d2u-s" ,  class: "btn btn-success"%>
                         <%= button_tag "Delete", type: "button", id: "du-s" ,  class: "btn btn-danger"%>
                     </td>

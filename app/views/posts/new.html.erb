@@ -17,8 +17,8 @@
             <% end %>
         </div>
         <%= form.hidden_field :status, value: 1 %>
-        <%= form.hidden_field :create_user_id, value: @user.id %> 
-        <%= form.hidden_field :updated_user_id, value: @user.id %> 
+        <%= form.hidden_field :create_user_id, value: 1 %> 
+        <%= form.hidden_field :updated_user_id, value: 1 %> 
 
         <%= button_tag "Clear", type: "reset" , class: "right btn btn-secondary" %>
         <%= form.submit "Submit" , class: "right btn btn-primary" %>

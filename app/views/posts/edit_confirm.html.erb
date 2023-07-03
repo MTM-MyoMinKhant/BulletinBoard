@@ -4,16 +4,16 @@
     <%= form_with model: @post, url: post_update_path(@post) ,method: :put do |form| %>
         <div class="field row form-adj">
             <%= form.label :title , "Title :" , class: "col-md-4" %><br />
-            <%= form.text_field :title, value: @post.title, autofocus: true, autocomplete: "title" , class: "col-md-8" %>
+            <%= form.text_field :title, value: @post.title, autofocus: true , readonly: true , autocomplete: "title" , class: "col-md-8" %>
         </div>
         <div class="field row form-adj">
             <%= form.label :description , "Description :" , class: "col-md-5" %><br />
-            <%= form.text_field :description, value: @post.description, autofocus: true, autocomplete: "description" , class: "col-md-7" %>
+            <%= form.text_field :description, value: @post.description, autofocus: true, readonly: true , autocomplete: "description" , class: "col-md-7" %>
         </div>
 
         <div class="form-check form-switch clearfix">
           <%= form.label :status, "Status:", class: "form-check-label left col-md-5" %> 
-          <%= form.check_box :status, { class: "form-check-input right col-md-7" }%>
+          <%= form.check_box :status, { class: "form-check-input right col-md-7", disabled: true } %>
         </div>
 
         <%= form.hidden_field :status, value: @post.status %>

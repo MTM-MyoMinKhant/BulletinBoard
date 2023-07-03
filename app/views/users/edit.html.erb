@@ -1,5 +1,5 @@
 <div class="middle">
-  <h2>Sign up</h2>
+  <h2>Profile Edit</h2>
   <div class="center">
     <%= form_with model: @user, method: :get do |form| %>
       <div class="field row form-adj">
@@ -30,17 +30,12 @@
       </div>
 
       <div class="field row form-adj">
-        <%= form.label :profile , "Old profile :" , class: "col-md-4" %><br />
-        <%= form.file_field :profile, autofocus: true, class: "col-md-8" %>
-      </div>
-
-      <div class="field row form-adj">
         <%= form.label :profile , "profile :" , class: "col-md-4" %><br />
         <%= form.file_field :profile, autofocus: true, class: "col-md-8" %>
       </div>
         
       <%= link_to "change password", "/users/1/change_password" , class: "right link2 cpl" %>
-      <%= link_to "Back", new_user_session_path , class: "right btn btn-secondary" %>
+      <%= link_to "Back", users_user_lists_path , class: "right btn btn-secondary" %>
       <%= form.submit "Submit" , class: "right btn btn-primary" %>
     <% end %>
   </div>

@@ -9,11 +9,11 @@ class User < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["name", "email" , "dob" ] # Add any other attributes you want to make searchable
   end
-  validates :name, presence: true 
-  validates :email, presence: true , uniqueness: true
-  validates :password , presence: true , confirmation: true
+  validates :name, presence: true , on: [:create , :update]
+  validates :email, presence: true , uniqueness: true , on: [:create , :update]
+  validates :password , presence: true , confirmation: true , allow_nil: true
   validates :phone, presence: true , numericality: { message: "must be a number" }
-  validates :dob, presence: true 
-  validates :address, presence: true 
+  validates :dob, presence: true , on: [:create , :update]
+  validates :address, presence: true , on: [:create , :update]
   validates :avatar, format: { with: /\.(png|jpg|jpeg|gif|avif|webp|jfif)\z/i, message: "only images files are allowed" }, allow_blank: true
 end

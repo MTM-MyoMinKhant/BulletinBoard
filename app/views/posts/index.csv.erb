@@ -1,0 +1,4 @@
+  <%= CSV.generate_line(['title' , 'descripton' , 'status' , 'create_user_id' , 'updated_user_id'])%>
+<% @excel_admin_posts.each do |post| %>
+  <%= CSV.generate_line([post.title , post.description , post.status , post.create_user_id , post.updated_user_id])%>
+<% end %>

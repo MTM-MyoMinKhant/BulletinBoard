@@ -31,7 +31,7 @@
                     <td><%= user_list.id %></td>
                     <td><%= user_list.name %></td>
                     <td><%= user_list.email %></td>
-                    <td>Zaw Zaw</td>
+                    <td><%= user_list.password_digest%></td>
                     <td>
                         <% if user_list.role == 0 %>
                             Admin
@@ -45,7 +45,7 @@
                     <td><%= user_list.dob %></td>
                     <td><%= user_list.address %></td>
                     <td>
-                        <%= link_to "Edit" , edit_user_path(user_list.id) , class: "btn btn-secondary"%>
+                        <%= link_to "Edit" , user_path(user_list.id) , class: "btn btn-secondary"%>
                         <%= button_tag "Detail", type: "button", id: "d2u-s" ,  class: "btn btn-success"%>
                         <%= button_tag "Delete", type: "button", id: "du-s" ,  class: "btn btn-danger"%>
                     </td>

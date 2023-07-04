@@ -3,7 +3,8 @@
   <div class="container-fluid">
     <div class="row">
         <div class="col-3">
-            <div class="test-block">
+            <div class="img-block">
+              <img src="<%= @user.avatar %>" class="img-size">
             </div>
         </div>
         <div class="col-3">
@@ -17,15 +18,22 @@
             <p>Address :</p>
         </div>
         <div class="col-5">
-            <p>1</p>
-            <p>Mg Mg</p>
-            <p>mgmg@gmail.com</p>
+            <p><%= @user.id %></p>
+            <p><%= @user.name%></p>
+            <p><%= @user.email%></p>
             <p>Zaw Zaw</p>
-            <p>Admin</p>
-            <p>09-123456</p>
-            <p>3-6-1999</p>
-            <p>Kan Daw Lay</p>
-            <%= link_to "Edit Profile", edit_user_path(1), class: "btn btn-secondary" %>
+            <%if @user.role == 0%>
+              <p>Admin</p>
+            <%elsif @user.role == 1%>
+              <p>User</p>
+            <%else%>
+              <p>Something Wrong</p>
+            <%end %>
+            <p><%= @user.phone%></p>
+            <p><%= @user.dob%></p>
+            <p><%= @user.address%></p>
+            <%= link_to "Edit Profile", edit_user_path(@user.id), class: "btn btn-secondary" %>
+            <%= link_to "Back", users_path , class: "btn btn-secondary" %>
         </div>
     </div>
   </div>

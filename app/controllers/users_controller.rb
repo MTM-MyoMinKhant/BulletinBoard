@@ -14,28 +14,45 @@ class UsersController < ApplicationController
     end
 
     def confirm_post
+        byebug
         @user = User.new(user_params)
+        @img_file = user_params[:avatar]
+        @temp_file = @img_file.tempfile.path
+
         @test = "Success"
         if @user.valid?
+            session[:avatar_data] = @img_file
             redirect_to users_confirm_path(user: {name: @user.name , email: @user.email , password: @user.password ,
                                                  password_confirmation: @user.password_confirmation , phone: @user.phone,
-                                                 address: @user.address , dob: @user.dob , avatar: @user.avatar , role: @user.role ,
+                                                 address: @user.address , dob: @user.dob , avatar: @user.avatar, role: @user.role ,
                                                  create_user_id: @user.create_user_id , updated_user_id: @user.updated_user_id
-                                                 })
+                                                 } , temp: @temp_file)
         else
             render :new, status: :unprocessable_entity  
         end   
     end
 
     def confirm
-        @user = User.new(user_params)
+        byebug  
+        @user = User.new(user_params)  
+        @img = session[:avatar_data]    
+        @temp_file = params[:temp]
+        @file_path = user_params[:avatar]
+        @path_components = @file_path.split('/')
+        @final_product = Rails.root.join(@path_components , @img["original_filename"]).to_s
         @test = "Success"
+        @img_file = ActionDispatch::Http::UploadedFile.new(
+          tempfile: File.new(@final_product),
+          content_type: @img["content_type"],
+          filename: @img["original_filename"]
+        )
+        session.delete(:avatar_data)
     end
 
     def create
         @user = User.new(user_params)
         if @user.save
-            redirect_to users_user_lists_path
+            redirect_to users_user_lists_path , flash: {success: "User Profile Successfully Created"}
         else 
             render :new, status: :unprocessable_entity  
         end         
@@ -56,7 +73,7 @@ class UsersController < ApplicationController
         @test2 = "Succeed2"
         @test = "Succeed"
         if @user.update(edit_params)
-            redirect_to user_path(@user.id)
+            redirect_to user_path(@user.id) , flash: {success: "User Successfully Updated"}
         else
             render :edit, status: :unprocessable_entity 
         end 
@@ -70,17 +87,21 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       @params = params[:user][:old_password]
       @test = "success"
-
-      if @user.authenticate(@params)        
-        if @user.update(password_params)
-          redirect_to users_user_lists_path
+      if password_params[:password] == ""
+         @user.errors.add(:password ," cannot be blank") 
+         render :change_password , status: :unprocessable_entity 
+      else
+        if @user.authenticate(@params)        
+          if @user.update(password_params)
+            redirect_to users_user_lists_path , flash: {success: "Password is Successfully Updated"}
+          else
+            render :change_password , status: :unprocessable_entity
+          end
         else
+          @user.errors.add(:old_password, "Old Password can't be blank and need to same with your password")
           render :change_password , status: :unprocessable_entity
         end
-      else
-        @user.errors.add(:old_password, "Old Password can't be blank and need to same with your password")
-        render :change_password , status: :unprocessable_entity
-      end      
+      end  
     end
 
     private

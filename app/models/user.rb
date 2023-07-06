@@ -11,7 +11,7 @@ class User < ApplicationRecord
   end
   validates :name, presence: true , on: [:create , :update]
   validates :email, presence: true , uniqueness: true , on: [:create , :update]
-  validates :password , presence: true , confirmation: true , allow_nil: true
+  validates :password , presence: true , confirmation: true ,on: [:create , :password_update]
   validates :phone, presence: true , numericality: { message: "must be a number" }
   validates :dob, presence: true , on: [:create , :update]
   validates :address, presence: true , on: [:create , :update]

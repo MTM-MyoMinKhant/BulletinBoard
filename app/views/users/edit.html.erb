@@ -9,7 +9,7 @@
           <p class="error col-12"><%= @user.errors.full_messages_for(:name).first %></p>
         <% end %>
       </div>
-    
+
       <div class="field row form-adj">
         <%= form.label :email , "Email :" , class: "col-4" %><br />
         <%= form.email_field :email, autofocus: true, autocomplete: "email" , class: "col-8" %>

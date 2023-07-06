@@ -125,6 +125,11 @@
     height: auto;
 }
 
+.icon-img {
+    width: 20px;
+    height: auto;
+}
+
 .pagination {
     display: block;
     text-align: center;   

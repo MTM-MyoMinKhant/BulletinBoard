@@ -28,7 +28,7 @@ class PostsController < ApplicationController
     def create
       @post = Post.new(post_params)
       if @post.save
-          redirect_to posts_path
+          redirect_to posts_path , flash: {success: "Post Successfully Updated"}
       else
           render :new, status: :unprocessable_entity 
       end
@@ -60,7 +60,7 @@ class PostsController < ApplicationController
     def update
       @post = Post.find(params[:id])
       if @post.update(post_params)
-          redirect_to posts_path
+          redirect_to posts_path , flash: {success: "Post Successfully Updated"}
       else
           render :edit, status: :unprocessable_entity 
       end 
@@ -69,23 +69,30 @@ class PostsController < ApplicationController
     def csv
     end
 
-    def csv_upload
-      
-      @file = params[:file]
-      file = File.open(@file)
-      csv = CSV.parse(file , headers: true)
-      csv.each do |row|
-          post_hash = Hash.new
-          post_hash[:title] = row["title"]  
-          post_hash[:description] = row["description"]
-          post_hash[:status] = row["status"]
-          post_hash[:create_user_id] = row["create_user_id"]
-          post_hash[:updated_user_id] = row["updated_user_id"] 
-          Post.create(post_hash)
+    def csv_upload    
+      @file = params[:file]   
+      if @file == nil
+        return redirect_to posts_csv_path, notice: "Need to add CSV File"
+      elsif @file.content_type == "text/csv"
+        file = File.open(@file)
+        csv = CSV.parse(file , headers: true)
+        if csv.headers == ["title" , "description" , "status" , "create_user_id" , "updated_user_id"]
+          csv.each do |row|
+            post_hash = Hash.new
+            post_hash[:title] = row["title"]  
+            post_hash[:description] = row["description"]
+            post_hash[:status] = row["status"]
+            post_hash[:create_user_id] = row["create_user_id"]
+            post_hash[:updated_user_id] = row["updated_user_id"] 
+            Post.create(post_hash)
+          end
+          redirect_to posts_path, flash: {success: "CSV Upload Successfully"}
+        else
+          return redirect_to posts_csv_path, notice: "Columns are not the same"
+        end
+      else
+        return redirect_to posts_csv_path, notice: "Only CSV file stupid"
       end
-      @test = "Success"
-      return redirect_to posts_csv_path, notice: "Only CSV please" unless @file.content_type == "text/csv"
-      redirect_to posts_path
     end
 
     private

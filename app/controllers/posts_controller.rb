@@ -2,7 +2,7 @@ class PostsController < ApplicationController
     def index   
       require 'csv' 
       @q = Post.ransack(params[:q])
-      @posts = @q.result.includes(:create_user, :updated_user).paginate(page: params[:page], per_page: 3)
+      @posts = @q.result.where(deleted_at: nil).includes(:create_user, :updated_user).paginate(page: params[:page], per_page: 3)
       @excel_admin_posts = Post.all()
     end
 
@@ -64,6 +64,13 @@ class PostsController < ApplicationController
       else
           render :edit, status: :unprocessable_entity 
       end 
+    end
+
+    def soft_delete
+      @post = Post.find(params[:id]);
+      @post.update_column(:deleted_at , Time.now) 
+      @post.update_column(:deleted_user_id , params[:delete_id])
+      redirect_to posts_path , flash: {success: "Post Deleted Updated"}
     end
 
     def csv

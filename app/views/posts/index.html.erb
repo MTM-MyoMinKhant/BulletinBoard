@@ -29,8 +29,7 @@
                 <th scope="col">Operation</th> 
             </tr>
         </thead>
-        <tbody>
-        
+        <tbody>        
             <% @posts.each do |post| %>
                 <tr>
                     <td><%= post.title %></td>
@@ -39,14 +38,8 @@
                     <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
                     <td>
                         <%=link_to "Edit" , edit_post_path(post.id) , class: "btn btn-secondary" %>
-                        <% detail_button_attributes = {
-                            type: "button",
-                            id: "d2p-s",
-                            class: "btn btn-success",
-                            onclick: "showDetail('#{post.title}', '#{post.description}', '#{post.create_user.name}', '#{post.created_at.strftime("%Y-%m-%d")}')"
-                        } %>
-                        <%= button_tag "Detail", detail_button_attributes %>
-                        <%= button_tag "Delete", type: "button", id: "dp-s" , class: "btn btn-danger"%>
+                        <%= button_tag "Detail", type: "Button", class: "btn btn-success d2p-s" , onclick:"showPostDetails(#{post.to_json})" %>
+                        <%= button_tag "Delete", type: "button" , class: "btn btn-danger dp-s" , onclick:"showDeletePostDetails(#{post.to_json})" %>
                     </td>
                 </tr>
             <% end %>
@@ -57,43 +50,62 @@
 
 <div id="delete-post" class="action-post dp-n">
     <h4>Delete Confirm</h4><hr>
-    <h6>Are you sure to delete post?</h6>
-    <div class="row">
-        <div class="left col-5">
-            <p>Id : </p>
-            <p>Title : </p>
-            <p>Description : </p>
-            <p>Status : </p>
-        </div>
-        <div class="left col-7">
-            <p>2</p>
-            <p>Post 2</p>
-            <p>Post Description</p>
-            <p>Active</p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h6>Are you sure to delete post?</h6>
+                <div class="clearfix">
+                    <p class="left">Id : </p>
+                    <p id="post_delete_id" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Title : </p>
+                    <p id="post_delete_title" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Description : </p>
+                    <p id="post_delete_description" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Status : </p>
+                    <p id="post_delete_status" class="left ms-2"></p>
+                </div>              
+            </div>
         </div>
     </div><hr>
-    <%= form_with model: @post, method: :get do |form| %>
-        <%= button_tag "Close", type: "button", id: "dp-n" , class: "right btn btn-secondary"%>
-        <%= form.submit "Submit" , class: "right btn btn-danger" %>
+    <%= form_with model: @post, url: post_soft_delete_path, method: :delete do |form| %>
+        <%= button_tag "Close", type: "button", id: "post-delete-close" , class: "right btn btn-secondary"%>
+        <%= form.hidden_field :id  , id: "post_soft_delete" %>
+        <%= form.hidden_field :delete_id , id: "delete_post" %> 
+        <%= form.submit "Delete" , class: "right btn btn-danger" %>
     <% end %>
 </div>
 
 <div id="detail-post" class="action-post d2p-n">
-    <h4>Post Detail</h4>
-    <div class="row">
-        <div class="left col-5">
-            <p>Id : </p>
-            <p>Title : </p>
-            <p>Description : </p>
-            <p>Status : </p>
-        </div>
-        <div class="left col-7">
-            <p id="detail-id"></p>
-            <p id="detail-title"></p>
-            <p id="detail-description"></p>
-            <p id="detail-status"></p>
-        </div>
-    </div><hr>
-    <%= button_tag "Close", type: "button", id: "d2p-n" , class: "right btn btn-secondary"%>
+    <h4>Post Detail</h4><hr>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h6>Are you sure to delete post?</h6>
+                <div class="clearfix">
+                    <p class="left">Id : </p>
+                    <p id="post_detail_id" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Title : </p>
+                    <p id="post_detail_title" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Description : </p>
+                    <p id="post_detail_description" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Status : </p>
+                    <p id="post_detail_status" class="left ms-2"></p>
+                </div>              
+            </div>
+        </div><hr>
+    </div>
+    <%= button_tag "Close", type: "button", id: "post-detail-close" , class: "right btn btn-secondary"%>
 </div>
 

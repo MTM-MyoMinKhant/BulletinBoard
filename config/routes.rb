@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   put 'users/:id/password_update' , to: 'users#password_update' , as: 'user_password_update'
   get 'users/confirm' , to: 'users#confirm'
   post 'users/confirm_post' , to: 'users#confirm_post'
+  delete 'users/soft_destroy' , to: 'users#soft_delete' , as: 'user_soft_delete'
   resources :users
   resources :admin
   get 'posts/confirm' , to: 'posts#confirm'
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
   get 'posts/csv', to: 'posts#csv'
   post 'posts/csv/upload' , to: 'posts#csv_upload'
   put 'posts/:id/update' , to: 'posts#update' , as: 'post_update'
+  delete 'posts/soft_destroy' , to: 'posts#soft_delete' , as: 'post_soft_delete'
   resources :posts
 end
 

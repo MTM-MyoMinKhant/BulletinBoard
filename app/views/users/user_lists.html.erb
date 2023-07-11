@@ -43,7 +43,7 @@
                     <td><%= user_list.id %></td>
                     <td><%= user_list.name %></td>
                     <td><%= user_list.email %></td>
-                    <td><%= user_list.password_digest%></td>
+                    <td><%= user_list.create_user.name%> , <%= user_list.updated_user.name %></td>
                     <td>
                         <% if user_list.role == 0 %>
                             Admin
@@ -58,8 +58,11 @@
                     <td><%= user_list.address %></td>
                     <td>
                         <%= link_to "Edit" , user_path(user_list.id) , class: "btn btn-secondary"%>
-                        <%= button_tag "Detail", type: "button", id: "d2u-s" ,  class: "btn btn-success"%>
-                        <%= button_tag "Delete", type: "button", id: "du-s" ,  class: "btn btn-danger"%>
+                        <%= button_tag "Detail", type: "button", class: "btn btn-success d2u-s" , onclick: "showUserDetails(
+                                                                                                            #{user_list.to_json} ,
+                                                                                                            #{user_list.create_user.name.to_json} , 
+                                                                                                            #{user_list.updated_user.name.to_json})"%>
+                        <%= button_tag "Delete", type: "button", class: "btn btn-danger du-s" , onclick:"showDeleteUserDetails(#{user_list.to_json})" %>
                     </td>
                 </tr>
             <% end %>
@@ -68,61 +71,104 @@
     <%= will_paginate @users_list %>
 </div>
 
-<div id="delete-user" class="action-post du-n">
-    <h4>Delete Confirm</h4><hr>
-    <h6>Are you sure to delete User?</h6>
-    <div class="row">
-        <div class="left col-5">
-            <p>No :</p>
-            <p>Name :</p>
-            <p>Email :</p>
-            <p>Created User :</p>
-            <p>Type :</p> 
-            <p>Phone :</p>
-            <p>Date Of Birth :</p>
-            <p>Address :</p>
-        </div>
-        <div class="left col-7">
-            <p>1</p>
-            <p>Mg Mg</p>
-            <p>mgmg@gmail.com</p>
-            <p>Zaw Zaw</p>
-            <p>Admin</p>
-            <p>09-123456</p>
-            <p>3-6-1999</p>
-            <p>Kan Daw Lay</p>
+<div id="detail-user" class="action-post d2u-n">
+    <h4>User Detail</h4><hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <img id="profile_img" src="" alt="profile-img">
+            </div>
+            <div class="col-8">
+                <div class="clearfix">
+                    <p class="left">Name : </p>
+                    <p id="user_detail_name" class="left ms-2"></p>
+                </div>  
+                <div class="clearfix">
+                    <p class="left">Type : </p>
+                    <p id="user_detail_role" class="left ms-2"></p>
+                </div>  
+                <div class="clearfix">
+                    <p class="left">Email : </p>
+                    <p id="user_detail_email" class="left ms-2"></p>
+                </div> 
+                <div class="clearfix">
+                    <p class="left">Phone : </p>
+                    <p id="user_detail_phone" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Date Of Birth : </p>
+                    <p id="user_detail_dob" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Address : </p>
+                    <p id="user_detail_address" class="left ms-2"></p>
+                </div>          
+                <div class="clearfix">
+                    <p class="left">Created Date : </p>
+                    <p id="user_detail_cd" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Created User : </p>
+                    <p id="user_detail_cu" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Updated Date : </p>
+                    <p id="user_detail_ud" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Updated Date : </p>
+                    <p id="user_detail_uu" class="left ms-2"></p>
+                </div>
+                      
+            </div>
         </div>
     </div><hr>
-    <%= form_with model: @user, method: :get do |form| %>
-        <%= button_tag "Close", type: "button", id: "du-n" , class: "right btn btn-secondary"%>
-        <%= form.submit "Submit" , class: "right btn btn-danger" %>
-    <% end %>
+    <%= button_tag "Close", type: "button", id: "detail-user-close" , class: "right btn btn-secondary"%>
 </div>
 
-<div id="detail-user" class="action-post d2u-n">
-    <h4>Post User</h4><hr>
-    <div class="row">
-        <div class="left col-5">
-            <p>No :</p>
-            <p>Name :</p>
-            <p>Email :</p>
-            <p>Created User :</p>
-            <p>Type :</p> 
-            <p>Phone :</p>
-            <p>Date Of Birth :</p>
-            <p>Address :</p>
-        </div>
-        <div class="left col-7">
-            <p>1</p>
-            <p>Mg Mg</p>
-            <p>mgmg@gmail.com</p>
-            <p>Zaw Zaw</p>
-            <p>Admin</p>
-            <p>09-123456</p>
-            <p>3-6-1999</p>
-            <p>Kan Daw Lay</p>
+<div id="delete-user" class="action-post du-n">
+    <h4>Delete Confirm</h4><hr>
+    
+    <div class="container">
+        <div class="row justify-content-center">          
+            <div class="col-8">
+                <h6>Are you sure to delete User?</h6>
+                <div class="clearfix">
+                    <p class="left">Id : </p>
+                    <p id="user_delete_id" class="left ms-2"></p>
+                </div> 
+                <div class="clearfix">
+                    <p class="left">Name : </p>
+                    <p id="user_delete_name" class="left ms-2"></p>
+                </div>   
+                <div class="clearfix">
+                    <p class="left">Type : </p>
+                    <p id="user_delete_type" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Email : </p>
+                    <p id="user_delete_email" class="left ms-2"></p>
+                </div> 
+                <div class="clearfix">
+                    <p class="left">Phone : </p>
+                    <p id="user_delete_phone" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Date Of Birth : </p>
+                    <p id="user_delete_dob" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Address : </p>
+                    <p id="user_delete_address" class="left ms-2"></p>
+                </div>           
+            </div>
         </div>
     </div><hr>
-    <%= button_tag "Close", type: "button", id: "d2u-n" , class: "right btn btn-secondary"%>
+    <%= form_with model: @user, url: user_soft_delete_path, method: :delete do |form| %>
+        <%= button_tag "Close", type: "button", id: "delete-user-close" , class: "right btn btn-secondary"%>
+        <%= form.hidden_field :id , id: "user_soft_delete" %> 
+        <%= form.hidden_field :delete_id , id: "delete_user" %> 
+        <%= form.submit "Delete" , class: "right btn btn-danger" %>
+    <% end %>
 </div>
 

@@ -52,12 +52,12 @@
         <%= form.file_field :avatar, autofocus: true, class: "col-8" %>
       </div>
 
-      <%= form.hidden_field :role, value: 1 %> 
-      <%= form.hidden_field :create_user_id, value: 1 %> 
-      <%= form.hidden_field :updated_user_id, value: 1 %> 
+      <%= form.hidden_field :role, value: @user.role %> 
+      <%= form.hidden_field :create_user_id, value: @user.create_user_id %> 
+      <%= form.hidden_field :updated_user_id, value: @member.id %> 
         
-      <%= link_to "change password", user_change_password_path(@user.id) , class: "right link2 cpl" %>
-      <%= link_to "Back", users_user_lists_path , class: "right btn btn-secondary" %>
+      <%= link_to "change password", user_change_password_user_path(@user.id) , class: "right link2 cpl" %>
+      <%= link_to "Back", users_user_lists_users_path , class: "right btn btn-secondary" %>
       <%= form.submit "Submit" , class: "right btn btn-primary" %>
     <% end %>
   </div>

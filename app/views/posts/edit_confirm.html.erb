@@ -1,7 +1,7 @@
 <div class="middle">
   <h2>Edit Confirm Post</h2>
   <div class="center">
-    <%= form_with model: @post, url: post_update_path(@post) ,method: :put do |form| %>
+    <%= form_with model: @post, url: post_update_post_path(@post) ,method: :put do |form| %>
         <div class="field row form-adj">
             <%= form.label :title , "Title :" , class: "col-md-4" %><br />
             <%= form.text_field :title, value: @post.title, autofocus: true , readonly: true , autocomplete: "title" , class: "col-md-8" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_30_045712) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_11_090326) do
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_30_045712) do
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email", default: "", null: false
-    t.string "password_digest", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
     t.integer "role"
     t.integer "phone"
     t.string "address"
@@ -38,11 +38,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_30_045712) do
     t.bigint "create_user_id"
     t.bigint "updated_user_id"
     t.bigint "deleted_user_id"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["create_user_id"], name: "index_users_on_create_user_id"
     t.index ["deleted_user_id"], name: "index_users_on_deleted_user_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["updated_user_id"], name: "index_users_on_updated_user_id"
   end
 

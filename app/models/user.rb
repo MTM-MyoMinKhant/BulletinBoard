@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  has_secure_password
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
   mount_uploader :avatar, AvatarUploader
   belongs_to :create_user, class_name: 'User', optional: true
   belongs_to :updated_user, class_name: 'User', optional: true

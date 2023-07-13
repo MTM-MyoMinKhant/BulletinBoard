@@ -13,7 +13,7 @@
 <div class="middle2 clearfix">
     <h2>Post Lists</h2>   
     <%= link_to "Download" , posts_path(format: :csv) , class: "right post-action-btn btn"%>  
-    <%= link_to "Upload" , posts_csv_path , class: "right post-action-btn btn"%>
+    <%= link_to "Upload" , posts_csv_posts_path , class: "right post-action-btn btn"%>
     <%= link_to "Create" , new_post_path , class: "right post-action-btn btn"%>
     <%= search_form_for @q , html: { class: "right" } do |f| %>
         <%= f.search_field :title_or_description_cont %>
@@ -73,7 +73,7 @@
             </div>
         </div>
     </div><hr>
-    <%= form_with model: @post, url: post_soft_delete_path, method: :delete do |form| %>
+    <%= form_with model: @post, url: post_soft_delete_posts_path, method: :delete do |form| %>
         <%= button_tag "Close", type: "button", id: "post-delete-close" , class: "right btn btn-secondary"%>
         <%= form.hidden_field :id  , id: "post_soft_delete" %>
         <%= form.hidden_field :delete_id , id: "delete_post" %> 

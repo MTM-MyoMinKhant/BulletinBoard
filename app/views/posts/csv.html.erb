@@ -13,7 +13,7 @@
 <div class="middle">
   <h2>Upload Csv File</h2>
   <div class="center">
-    <%= form_with model: @post, url: posts_csv_upload_path , method: :post do |form| %>
+    <%= form_with model: @post, url: posts_csv_upload_posts_path , method: :post do |form| %>
         <div class="field row form-adj">
             <%= form.label :file , "Upload Csv File :" , class: "col-md-4" %><br />
             <%= form.file_field :file, autofocus: true, class: "col-md-8" %>

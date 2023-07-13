@@ -5,19 +5,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
   private
 
-  def sign_up_params
-    params.require(:user).permit(:name, :email , :password, :password_confirmation, :role , :phone , :dob , :address , :avatar)
-  end
-
   # GET /resource/sign_up
   # def new
-  #   super
+  #   byebug
+  #   super  
   # end
-
-  def confirm
-    self.resource = resource_class.new
-    render :confirm
-  end
 
   # POST /resource
   # def create
@@ -48,11 +40,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
-
+  protected
+  def sign_up_params
+    params.require(:user).permit(:name, :email , :password, :password_confirmation, :role , :phone , :dob , :address , :avatar)
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  #  devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
   # end
 
   # If you have extra params to permit, append them to the sanitizer.

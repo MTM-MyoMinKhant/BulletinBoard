@@ -1,7 +1,7 @@
 <div class="middle">
 <h2>Confirm Account</h2>
 <div class="center">
-<%= form_with model: @user , method: :post do |f| %>
+<%= form_with model: @user , url: account_create_users_path , method: :post do |f| %>
     <div class="field row form-adj">
         <%= f.label :name , "Name :" , class: "col-md-4" %><br />
         <%= f.text_field :name, autofocus: true, value: @user.name , readonly: true , class: "col-md-8" %> 
@@ -38,15 +38,15 @@
     </div>
 
     <div class="field row form-adj">
-        <p class="col-4">Old Profile :</p>
+        <p class="col-4">Old Profile :</p>  
         <img src="<%= @file_path %>" class="col-8 edit-img">
     </div>
-    <%= f.hidden_field :avatar , value: @img %>
+    <%= f.hidden_field :avatar , value: @img_file %>
     <%= f.hidden_field :role, value: @user.role %> 
     <%= f.hidden_field :create_user_id, value: @user.create_user_id %> 
     <%= f.hidden_field :updated_user_id, value: @user.updated_user_id %> 
 
-    <%= link_to "Back", users_user_lists_path , class: "right btn btn-secondary" %>
+    <%= link_to "Back", users_user_lists_users_path , class: "right btn btn-secondary" %>
     <%= f.submit "Confirm" , class: "right btn btn-primary" %>
     <% end %>
 </div>

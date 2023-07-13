@@ -18,16 +18,29 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-6 clearfix">
-            <h3><%= link_to "Bulletin_Board" , users_path , class: "link left"%></h3>       
-            <%= link_to "Users" , users_user_lists_path , class: "link hsub-link h-adj left"%>
-            <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
+            <h3><%= link_to "Bulletin_Board" , posts_path , class: "link left"%></h3>
+            <% if user_signed_in? %>
+              <% if @member.role == 0 %>
+                <%= link_to "Users" , users_user_lists_users_path , class: "link hsub-link h-adj left"%>
+                <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
+              <% elsif @member.role == 1 %>
+                <%= link_to "Posts" , posts_path , class: "link hsub-link h-adj left"%>
+              <% else %>
+                <p class="link hsub-link h-adj left">underfined role</p>
+              <% end %>
+            <% end %>      
           </div>
           <div class="col-6 clearfix">  
-            <p id="user_account" class="link hsub-link right"> Testing Name <i class="fa-solid fa-user right icon res"></i></p>
-            <div class="abs profile-info none">
-              <%= link_to "Profile" , user_path(1) , class: "link hsub-link h-adj"%></hr>
-              <%= link_to "Log Out" , "#" , class: "link hsub-link h-adj" , "data-turbo-method": :delete %>
-            </div>             
+            <% if user_signed_in? %>
+              <p id="user_account" class="link hsub-link right"> <%= @member.name %> <i class="fa-solid fa-user right icon res"></i></p>
+              <div class="abs profile-info none">
+                <%= link_to "Profile" , user_path(@member.id) , class: "link hsub-link h-adj"%></hr>
+                <%= link_to "Log Out" , destroy_user_session_path , class: "link hsub-link h-adj" , "data-turbo-method": :delete %>
+              </div>
+            <% else %>
+              <%= link_to "Log In" , new_user_session_path , class: "link hsub-link  right"%>
+              <%= link_to "Sign Up" , new_user_registration_path , class: "link hsub-link right"%>
+            <% end %>             
           </div>
         </div>
       </div>

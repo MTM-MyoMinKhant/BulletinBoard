@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   def user_lists 
     @member = current_user
     @q = User.ransack(params[:q])
-    @users_list = @q.result.where(deleted_at: nil).paginate(page: params[:page], per_page: 2)
+    @users_list = @q.result.where(deleted_at: nil).paginate(page: params[:page], per_page: 5)
   end
 
   def new
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @member = current_user
     @user = User.new(user_params)
     @img_file = user_params[:avatar]
-
+  
     @test = "Success"
     if @user.valid?
       session[:avatar_data] = @img_file
@@ -36,14 +36,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)  
     @img = session[:avatar_data]    
     @file_path = user_params[:avatar] 
-    @img_path = "C:/Rails/BulletinBoard/public" + @file_path 
-    if @file_path != nil
-      @img_file = ActionDispatch::Http::UploadedFile.new(
-        tempfile: File.new(@img_path),
-        content_type: @img["content_type"],
-        filename: @img["original_filename"]
-      ) 
-    end
     session.delete(:avatar_data)
   end
 
@@ -53,6 +45,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @test = 'Succeed'
     if @user.save
+      @id = User.find_by(email: @user.email)
+      @folder_path = "public/uploads/user/avatar/" + @id.id.to_s 
+      @id.update(avatar: user_params[:avatar])
+      Dir.mkdir(@folder_path) unless File.exist?(@folder_path)
       redirect_to users_user_lists_users_path , flash: {success: "User Profile Successfully Created"}
     else 
       render :new, status: :unprocessable_entity  

@@ -1,7 +1,7 @@
 <div class="middle">
 <h2>Create Account</h2>
 <div class="center">
-    <%= form_with model: @user , url: users_confirm_post_users_path , method: :post do |f| %>
+    <%= form_with model: @user , url:  users_confirm_post_users_path , method: :post do |f| %>
         <div class="field row form-adj">
             <%= f.label :name , "Name :" , class: "col-4" %><br />
             <%= f.text_field :name, autofocus: true, class: "col-8" %>

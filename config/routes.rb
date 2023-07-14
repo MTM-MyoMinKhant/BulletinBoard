@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       get 'users/user_lists' , to: 'users#user_lists'
       get 'users/confirm' , to: 'users#confirm'
       post 'users/confirm_post' , to: 'users#confirm_post'
-      post 'account/create' , to: 'users#acc_create'
+      post 'users/account/create' , to: 'users#acc_create'
       delete 'users/soft_destroy' , to: 'users#soft_delete' , as: 'user_soft_delete'
     end
 

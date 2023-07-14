@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   require 'will_paginate/array'
   def user_lists 
+    flash_data = params[:flash]
+    flash[:success] = flash_data[:success] if flash_data && flash_data[:success]
     @member = current_user
     @q = User.ransack(params[:q])
     @users_list = @q.result.where(deleted_at: nil).paginate(page: params[:page], per_page: 5)
@@ -15,16 +17,10 @@ class UsersController < ApplicationController
     byebug
     @member = current_user
     @user = User.new(user_params)
-    @img_file = user_params[:avatar]
   
     @test = "Success"
-    if @user.valid?
-      session[:avatar_data] = @img_file
-      redirect_to users_confirm_users_path(user: {name: @user.name , email: @user.email , password: @user.password ,
-                                                  password_confirmation: @user.password_confirmation , phone: @user.phone,
-                                                  address: @user.address , dob: @user.dob , avatar: @user.avatar, role: @user.role ,
-                                                  create_user_id: @user.create_user_id , updated_user_id: @user.updated_user_id
-                                                  })
+    if @user.save
+      redirect_to users_confirm_users_path(user: @user.email)
     else
       render :new, status: :unprocessable_entity  
     end   
@@ -33,23 +29,18 @@ class UsersController < ApplicationController
   def confirm
     byebug
     @member = current_user
-    @user = User.new(user_params)  
-    @img = session[:avatar_data]    
-    @file_path = user_params[:avatar] 
-    session.delete(:avatar_data)
+    @fetch = params[:user]
+    @user = User.find_by(email: @fetch)
+    @test = "Succeed"
   end
 
   def acc_create
     byebug
     @member = current_user
-    @user = User.new(user_params)
+    @user = User.find(params[:id])
     @test = 'Succeed'
-    if @user.save
-      @id = User.find_by(email: @user.email)
-      @folder_path = "public/uploads/user/avatar/" + @id.id.to_s 
-      @id.update(avatar: user_params[:avatar])
-      Dir.mkdir(@folder_path) unless File.exist?(@folder_path)
-      redirect_to users_user_lists_users_path , flash: {success: "User Profile Successfully Created"}
+    if @user.destroy
+      redirect_to users_user_lists_users_path
     else 
       render :new, status: :unprocessable_entity  
     end

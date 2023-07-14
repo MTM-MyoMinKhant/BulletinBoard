@@ -7,7 +7,6 @@ class User < ApplicationRecord
   belongs_to :create_user, class_name: 'User', optional: true
   belongs_to :updated_user, class_name: 'User', optional: true
   belongs_to :deleted_user, class_name: 'User', optional: true
-  has_many :posts, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)
     ["name", "email" , "dob" ] # Add any other attributes you want to make searchable

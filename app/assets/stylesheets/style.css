@@ -116,7 +116,17 @@
 }
 
 .img-size {
-    width: 100px;
+    width: 100%;
+    height: auto;
+}
+
+.edit-img {
+    width: 150px;
+    height: auto;
+}
+
+.icon-img {
+    width: 20px;
     height: auto;
 }
 
@@ -147,8 +157,13 @@
 
 .action-post {
     background-color: rgb(163, 161, 161);
-    width: 300px;
+    width: 500px;
     position: fixed;
+}
+
+#profile_img {
+    width: 100%;
+    height: 130px;
 }
 
 .dp-s {
@@ -181,7 +196,7 @@
 
 .du-s {
     top: 15%;
-    left: 40%;
+    left: 35%;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
@@ -195,7 +210,7 @@
 
 .d2u-s {
     top: 15%;
-    left: 40%;
+    left: 35%;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
@@ -207,11 +222,17 @@
     transition: opacity 0.5s ease-in-out;
 }
 
-.test-block {
+.img-block {
     width: 100%;
     height: 200px;
-    background-color: black;
 }
 
+#delete-user h6 {
+    color: red;
+}
+
+#delete-post h6 {
+    color: red;
+}
 
 

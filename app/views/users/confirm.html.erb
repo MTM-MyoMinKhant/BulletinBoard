@@ -1,0 +1,50 @@
+<div class="middle">
+<h2>Confirm Account</h2>
+<div class="center">
+<%= form_with model: @user , url: user_account_create_user_path(@user.id) , method: :post do |f| %>
+    <div class="field row form-adj">
+        <%= f.label :name , "Name :" , class: "col-md-4" %><br />
+        <%= f.text_field :name, autofocus: true, value: @user.name , readonly: true , class: "col-md-8" %> 
+    </div>
+    
+    <div class="field row form-adj">
+        <%= f.label :email , "Email :" , class: "col-md-4" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" , value: @user.email  , readonly: true , class: "col-md-8" %>    
+    </div>
+    
+    <div class="field row form-adj">
+        <%= f.label :password , "Password :" , class: "col-md-4" %>
+        <%= f.password_field :password, autocomplete: "new-password" , value: "*****" , readonly: true , class: "col-md-8" %>  
+    </div>
+    
+    <div class="field row form-adj">
+        <%= f.label :password_confirmation , "Password Confirmation :" , class: "col-md-6" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" , value: "*****" , readonly: true , class: "col-md-6" %>    
+    </div>
+
+    <div class="field row form-adj">
+        <%= f.label :phone , "Phone :" , class: "col-md-4" %><br />
+        <%= f.text_field :phone, autofocus: true, readonly: true , value: @user.phone , class: "col-md-8" %>    
+    </div>
+
+    <div class="field row form-adj">
+        <%= f.label :dob , "Date Of Birth :" , class: "col-md-4" %><br />
+        <%= f.date_field :dob, autofocus: true, readonly: true , value: @user.dob, class: "col-md-8" %>    
+    </div>
+
+    <div class="field row form-adj">
+        <%= f.label :address , "Address :" , class: "col-md-4" %><br />
+        <%= f.text_field :address, autofocus: true, value: @user.address , readonly: true , class: "col-md-8" %>    
+    </div>
+
+    <div class="field row form-adj">
+        <p class="col-4">Old Profile :</p>  
+        <img src="<%= @user.avatar %>" class="col-8 edit-img">
+    </div>
+
+    <%= f.submit "Back" , class: "right btn btn-secondary" %>
+    <%= link_to "Confirm", users_user_lists_users_path(flash: { success: "User Profile Successfully Created" }) , class: "right btn btn-primary"%>
+    
+<% end %>
+</div>
+</div>

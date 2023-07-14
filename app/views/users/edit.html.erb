@@ -1,46 +1,63 @@
 <div class="middle">
-  <h2>Sign up</h2>
+  <h2>Profile Edit</h2>
   <div class="center">
-    <%= form_with model: @user, method: :get do |form| %>
+    <%= form_with model: @user, method: :put do |form| %>
       <div class="field row form-adj">
-        <%= form.label :name , "Name :" , class: "col-md-4" %><br />
-        <%= form.text_field :name, autofocus: true, class: "col-md-8" %>
-      </div>
-    
-      <div class="field row form-adj">
-        <%= form.label :email , "Email :" , class: "col-md-4" %><br />
-        <%= form.email_field :email, autofocus: true, autocomplete: "email" , class: "col-md-8" %>
-      </div>
-
-      <%# <%= form.hidden_field :type, value: 1 %> 
-
-      <div class="field row form-adj">
-        <%= form.label :phone , "Phone :" , class: "col-md-4" %><br />
-        <%= form.text_field :phone, autofocus: true, class: "col-md-8" %>
+        <%= form.label :name , "Name :" , class: "col-4" %><br />
+        <%= form.text_field :name, autofocus: true, class: "col-8" %>
+        <% if @user.errors[:name].any? %>
+          <p class="error col-12"><%= @user.errors.full_messages_for(:name).first %></p>
+        <% end %>
       </div>
 
       <div class="field row form-adj">
-        <%= form.label :dob , "Date Of Birth :" , class: "col-md-4" %><br />
-        <%= form.date_field :dob, autofocus: true, class: "col-md-8" %>
+        <%= form.label :email , "Email :" , class: "col-4" %><br />
+        <%= form.email_field :email, autofocus: true, autocomplete: "email" , class: "col-8" %>
+        <% if @user.errors[:email].any? %>
+          <p class="error col-12"><%= @user.errors.full_messages_for(:email).first %></p>
+        <% end %>
       </div>
 
       <div class="field row form-adj">
-        <%= form.label :address , "Address :" , class: "col-md-4" %><br />
-        <%= form.text_field :address, autofocus: true, class: "col-md-8" %>
+        <%= form.label :phone , "Phone :" , class: "col-4" %><br />
+        <%= form.text_field :phone, autofocus: true, class: "col-8" %>
+        <% if @user.errors[:phone].any? %>
+          <p class="error col-12"><%= @user.errors.full_messages_for(:phone).first %></p>
+        <% end %>
       </div>
 
       <div class="field row form-adj">
-        <%= form.label :profile , "Old profile :" , class: "col-md-4" %><br />
-        <%= form.file_field :profile, autofocus: true, class: "col-md-8" %>
+        <%= form.label :dob , "Date Of Birth :" , class: "col-4" %><br />
+        <%= form.date_field :dob, autofocus: true, class: "col-8" %>
+        <% if @user.errors[:dob].any? %>
+          <p class="error col-12"><%= @user.errors.full_messages_for(:dob).first %></p>
+        <% end %>
       </div>
 
       <div class="field row form-adj">
-        <%= form.label :profile , "profile :" , class: "col-md-4" %><br />
-        <%= form.file_field :profile, autofocus: true, class: "col-md-8" %>
+        <%= form.label :address , "Address :" , class: "col-4" %><br />
+        <%= form.text_field :address, autofocus: true, class: "col-8" %>
+        <% if @user.errors[:address].any? %>
+          <p class="error col-12"><%= @user.errors.full_messages_for(:address).first %></p>
+        <% end %>
       </div>
+
+      <div class="field row form-adj">
+        <p class="col-4">Old Profile :</p>
+        <img src="<%= @user.avatar %>" class="col-8 edit-img">
+      </div>
+
+      <div class="field row form-adj">
+        <%= form.label :avatar , "profile :" , class: "col-4" %><br />
+        <%= form.file_field :avatar, autofocus: true, class: "col-8" %>
+      </div>
+
+      <%= form.hidden_field :role, value: @user.role %> 
+      <%= form.hidden_field :create_user_id, value: @user.create_user_id %> 
+      <%= form.hidden_field :updated_user_id, value: @member.id %> 
         
-      <%= link_to "change password", "/users/1/change_password" , class: "right link2 cpl" %>
-      <%= link_to "Back", new_user_session_path , class: "right btn btn-secondary" %>
+      <%= link_to "change password", user_change_password_user_path(@user.id) , class: "right link2 cpl" %>
+      <%= link_to "Back", users_user_lists_users_path , class: "right btn btn-secondary" %>
       <%= form.submit "Submit" , class: "right btn btn-primary" %>
     <% end %>
   </div>

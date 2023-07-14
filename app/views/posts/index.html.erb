@@ -1,8 +1,20 @@
+<% if flash[:success] %>
+  <div class="alert alert-success d-flex align-items-center" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-check-circle-fill flex-shrink-0 me-2 icon-img" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    <div class="flex-grow-1">
+      <%= flash[:success] %>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
 <div class="middle2 clearfix">
     <h2>Post Lists</h2>   
-    <%= link_to "Download" , users_path , class: "right post-action-btn btn"%>  
-    <%= link_to "Upload" , posts_csv_path   , class: "right post-action-btn btn"%>
-    <%= link_to "Create" , users_path   , class: "right post-action-btn btn"%>
+    <%= link_to "Download" , posts_path(format: :csv) , class: "right post-action-btn btn"%>  
+    <%= link_to "Upload" , posts_csv_posts_path , class: "right post-action-btn btn"%>
+    <%= link_to "Create" , new_post_path , class: "right post-action-btn btn"%>
     <%= search_form_for @q , html: { class: "right" } do |f| %>
         <%= f.search_field :title_or_description_cont %>
         <%= f.submit "Search" , class: "post-action-btn btn" %>
@@ -17,7 +29,7 @@
                 <th scope="col">Operation</th> 
             </tr>
         </thead>
-        <tbody>
+        <tbody>        
             <% @posts.each do |post| %>
                 <tr>
                     <td><%= post.title %></td>
@@ -26,8 +38,8 @@
                     <td><%= post.created_at.strftime("%Y-%m-%d") %></td>
                     <td>
                         <%=link_to "Edit" , edit_post_path(post.id) , class: "btn btn-secondary" %>
-                        <%= button_tag "Detail", type: "button", id: "d2p-s" , class: "btn btn-success" , data: { post_id: post.id }%>
-                        <%= button_tag "Delete", type: "button", id: "dp-s" , class: "btn btn-danger"%>
+                        <%= button_tag "Detail", type: "Button", class: "btn btn-success d2p-s" , onclick:"showPostDetails(#{post.to_json})" %>
+                        <%= button_tag "Delete", type: "button" , class: "btn btn-danger dp-s" , onclick:"showDeletePostDetails(#{post.to_json})" %>
                     </td>
                 </tr>
             <% end %>
@@ -38,43 +50,62 @@
 
 <div id="delete-post" class="action-post dp-n">
     <h4>Delete Confirm</h4><hr>
-    <h6>Are you sure to delete post?</h6>
-    <div class="row">
-        <div class="left col-5">
-            <p>Id : </p>
-            <p>Title : </p>
-            <p>Description : </p>
-            <p>Status : </p>
-        </div>
-        <div class="left col-7">
-            <p>2</p>
-            <p>Post 2</p>
-            <p>Post Description</p>
-            <p>Active</p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h6>Are you sure to delete post?</h6>
+                <div class="clearfix">
+                    <p class="left">Id : </p>
+                    <p id="post_delete_id" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Title : </p>
+                    <p id="post_delete_title" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Description : </p>
+                    <p id="post_delete_description" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Status : </p>
+                    <p id="post_delete_status" class="left ms-2"></p>
+                </div>              
+            </div>
         </div>
     </div><hr>
-    <%= form_with model: @post, method: :get do |form| %>
-        <%= button_tag "Close", type: "button", id: "dp-n" , class: "right btn btn-secondary"%>
-        <%= form.submit "Submit" , class: "right btn btn-danger" %>
+    <%= form_with model: @post, url: post_soft_delete_posts_path, method: :delete do |form| %>
+        <%= button_tag "Close", type: "button", id: "post-delete-close" , class: "right btn btn-secondary"%>
+        <%= form.hidden_field :id  , id: "post_soft_delete" %>
+        <%= form.hidden_field :delete_id , id: "delete_post" %> 
+        <%= form.submit "Delete" , class: "right btn btn-danger" %>
     <% end %>
 </div>
 
 <div id="detail-post" class="action-post d2p-n">
-    <h4>Post Detail</h4>
-    <div class="row">
-        <div class="left col-5">
-            <p>Id : </p>
-            <p>Title : </p>
-            <p>Description : </p>
-            <p>Status : </p>
-        </div>
-        <div class="left col-7">
-            <p>2</p>
-            <p>Post 2</p>
-            <p>Post Description</p>
-            <p>Active</p>
-        </div>
-    </div><hr>
-    <%= button_tag "Close", type: "button", id: "d2p-n" , class: "right btn btn-secondary"%>
+    <h4>Post Detail</h4><hr>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h6>Are you sure to delete post?</h6>
+                <div class="clearfix">
+                    <p class="left">Id : </p>
+                    <p id="post_detail_id" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Title : </p>
+                    <p id="post_detail_title" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Description : </p>
+                    <p id="post_detail_description" class="left ms-2"></p>
+                </div>
+                <div class="clearfix">
+                    <p class="left">Status : </p>
+                    <p id="post_detail_status" class="left ms-2"></p>
+                </div>              
+            </div>
+        </div><hr>
+    </div>
+    <%= button_tag "Close", type: "button", id: "post-detail-close" , class: "right btn btn-secondary"%>
 </div>
 

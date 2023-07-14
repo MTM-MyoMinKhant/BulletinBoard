@@ -9,9 +9,11 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super do |resource|
+      flash[:error] = resource.errors.full_messages.join(", ") if resource.errors.any?
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy

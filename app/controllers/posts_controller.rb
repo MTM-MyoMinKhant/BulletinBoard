@@ -1,26 +1,30 @@
 class PostsController < ApplicationController
-  def index  
-    @member = current_user 
+  # don't know how 
+  def index 
+    @test = "succeed"
     require 'csv' 
     @q = Post.ransack(params[:q])
-
+    @member = current_user
     if @member.role == 0
       @posts = @q.result.where(deleted_at: nil).includes(:create_user, :updated_user).paginate(page: params[:page], per_page: 3)
       @excel_admin_posts = Post.all()
+      @test = "Succeed"
     elsif @member.role == 1
       @posts = @q.result.where(deleted_at: nil , create_user_id: @member.id).includes(:create_user, :updated_user).paginate(page: params[:page], per_page: 3)
       @excel_admin_posts = Post.all()
     else
       byebug
     end
-   
+    #@posts = PostsService.post_lists(@q , current_user , params[:page])
   end
 
+  # no need
   def new
     @member = current_user
     @post = Post.new
   end
 
+  # no need
   def confirm_post
     @member = current_user
     @post = Post.new(post_params)
@@ -33,11 +37,13 @@ class PostsController < ApplicationController
     end   
   end
 
+  #no need
   def confirm
     @member = current_user
     @post = Post.new(post_params)
   end
 
+  #no need
   def create
     @member = current_user
     @post = Post.new(post_params)
@@ -48,16 +54,17 @@ class PostsController < ApplicationController
     end
   end
 
+  #no need
   def edit
     @member = current_user
     @post = Post.find(params[:id])
   end
 
+  #no need
   def edit_confirm_post
     @member = current_user
     @post = Post.new(post_params)
     @post.id = (params[:id])
-    @test = "success"
     if @post.valid?
         redirect_to edit_confirm_post_path(post: {title: @post.title , description: @post.description ,
                                               status: @post.status ,  create_user_id: @post.create_user_id ,
@@ -67,13 +74,14 @@ class PostsController < ApplicationController
     end  
   end
 
+  #no need
   def edit_confirm
     @member = current_user
     @post = Post.new(post_params)
     @post.id = (params[:id])
-    @test = "success"
   end
 
+  #no need
   def update
     @member = current_user
     @post = Post.find(params[:id])
@@ -84,18 +92,18 @@ class PostsController < ApplicationController
     end 
   end
 
+  #done 
   def soft_delete
-    @member = current_user
-    @post = Post.find(params[:id]);
-    @post.update_column(:deleted_at , Time.now) 
-    @post.update_column(:deleted_user_id , params[:delete_id])
+    @post_delete = PostsService.soft_delete(current_user , params)
     redirect_to posts_path , flash: {success: "Post Successfully Deleted"}
   end
 
+  # done
   def csv
     @member = current_user
   end
 
+  # don't know how 
   def csv_upload   
     @member = current_user 
     @file = params[:file]   

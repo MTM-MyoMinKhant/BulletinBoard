@@ -1,44 +1,46 @@
 class UsersController < ApplicationController
   require 'will_paginate/array'
+
+  # don;t know how
   def user_lists 
     flash_data = params[:flash]
     flash[:success] = flash_data[:success] if flash_data && flash_data[:success]
     @member = current_user
     @q = User.ransack(params[:q])
     @users_list = @q.result.where(deleted_at: nil).paginate(page: params[:page], per_page: 5)
+    # @user_lists = UsersService.new.user_lists(flash: params[:flash], q: params[:q], page: params[:page])
   end
 
+  # no need
   def new
     @member = current_user
     @user = User.new()
   end
 
+  # done
   def confirm_post
-    byebug
     @member = current_user
     @user = User.new(user_params)
-  
-    @test = "Success"
-    if @user.save
-      redirect_to users_confirm_users_path(user: @user.email)
-    else
-      render :new, status: :unprocessable_entity  
-    end   
+    unless @user.valid?
+      return render :new , status: :unprocessable_entity
+    end
+    @user = UsersService.new.create_acc(user_params)
+    if @user
+      redirect_to users_confirm_users_path(user: user_params[:email])
+    end
   end
 
+  # no need
   def confirm
-    byebug
     @member = current_user
     @fetch = params[:user]
     @user = User.find_by(email: @fetch)
-    @test = "Succeed"
   end
 
+  # no need
   def acc_create
-    byebug
     @member = current_user
     @user = User.find(params[:id])
-    @test = 'Succeed'
     if @user.destroy
       redirect_to users_user_lists_users_path
     else 
@@ -46,23 +48,23 @@ class UsersController < ApplicationController
     end
   end
 
+  # no need
   def show
     @member = current_user
     @user = User.find(params[:id])
-    test  = "success"
   end
 
+  # no need
   def edit
     @member = current_user
     @user = User.find(params[:id])
   end
 
+  # still need fixing
   def update
     @member = current_user
     @user = User.find(params[:id])
     @wew = edit_params
-    @test2 = "Succeed2"
-    @test = "Succeed"
     if @user.update(edit_params)
         redirect_to user_path(@user.id) , flash: {success: "User Successfully Updated"}
     else
@@ -70,21 +72,23 @@ class UsersController < ApplicationController
     end 
   end
 
+  # done
   def soft_delete
     @member = current_user
-    @user = User.find(params[:id]);
-    @user.update_column(:deleted_at, Time.now)
-    @user.update_column(:deleted_user_id, params[:delete_id])
-    redirect_to users_user_lists_path , flash: {success: "User Successfully Deleted"}
+    @delete = UsersService.new.soft_delete(params[:id] , params[:delete_id])
+    if @delete
+      redirect_to users_user_lists_users_path , flash: {success: "User Successfully Deleted"}
+    end
   end
 
+  # no need
   def change_password
     @member = current_user
     @user = User.find(params[:id])
   end
 
+  # no need
   def password_update
-    byebug
     @member = current_user
     @user = User.find(params[:id])
     @params = params[:user][:old_password]

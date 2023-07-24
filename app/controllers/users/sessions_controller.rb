@@ -9,18 +9,19 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  def create
-    super do |resource|
-      flash[:error] = resource.errors.full_messages.join(", ") if resource.errors.any?
-    end
-  end
+  # def create
+  #   super
+  # end
 
   # DELETE /resource/sign_out
   # def destroy
   #   super
   # end
 
-  # protected
+  protected
+  def sign_in_params
+    params.require(:user).permit(:email , :password)
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params

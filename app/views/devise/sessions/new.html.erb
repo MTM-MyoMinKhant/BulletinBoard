@@ -5,16 +5,16 @@
       <div class="field row form-adj">
         <%= f.label :email , "Email :" , class: "col-md-4" %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: "col-md-8" %>
-        <% if resource.errors.has_key?(:email) %>
-          <p class="error"><%= resource.errors[:email].first %></p>
+        <% if resource.errors[:email].any? %>
+            <p class="error"><%= resource.errors.full_messages_for(:email).first %></p>
         <% end %>
       </div>
     
       <div class="field row form-adj">
         <%= f.label :password , "Password :" , class: "col-md-4" %><br />
         <%= f.password_field :password, autocomplete: "current-password" , class: "col-md-8" %>
-        <% if resource.errors.has_key?(:password) %>
-          <p class="error"><%= resource.errors[:password].first %></p>
+        <% if resource.errors[:password].any? %>
+            <p class="error"><%= resource.errors.full_messages_for(:password).first %></p>
         <% end %>
       </div>
       

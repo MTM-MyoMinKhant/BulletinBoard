@@ -70,7 +70,7 @@
         <%= f.hidden_field :create_user_id, value: @member.id %> 
         <%= f.hidden_field :updated_user_id, value: @member.id %> 
         
-        <%= button_tag "Clear", type: "reset" , class: "right btn btn-secondary" %>
+        <%= link_to "Back", users_user_lists_users_path, class: "right btn btn-secondary"%>
         <%= f.submit "Confirm" , class: "right btn btn-primary" %>
     <% end %>
 </div>

@@ -34,7 +34,9 @@ gem 'letter_opener', '~> 1.8', '>= 1.8.1'
 gem 'bootstrap', '~> 5.2', '>= 5.2.3'
 gem 'popper_js', '~> 2.11', '>= 2.11.7'
 gem 'will_paginate', '~> 4.0'
+gem 'seed-fu', '~> 2.3', '>= 2.3.9'
 gem 'ransack'
+gem 'faker'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -60,6 +62,7 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'rspec-rails', '~> 6.0.0' 
 end
 
 group :development do

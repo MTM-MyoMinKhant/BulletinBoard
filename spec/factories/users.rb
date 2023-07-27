@@ -1,12 +1,12 @@
 FactoryBot.define do
   factory :user , aliases:[:create_user_id]  do
-    name {"testing4"}
-    email {"testing4@gmail.com"}
+    name {"tesssss"}
+    email {"tessss@gmail.com"}
     password {"1234qwer"}
     role {0}
     phone {1234567}
     address {"Kan Daw Lay"}
-    dob {"1999-09-09"}
+    dob {"1999-06-03"}
     create_user_id {1}
     updated_user_id {1}
   end

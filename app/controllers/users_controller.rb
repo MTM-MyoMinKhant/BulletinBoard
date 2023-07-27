@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   # don;t know how
   def user_lists 
-    byebug
     flash_data = params[:flash]
     flash[:success] = flash_data[:success] if flash_data && flash_data[:success]
     @member = current_user

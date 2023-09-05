@@ -4,6 +4,7 @@ class UsersService
   end
 
   def create_acc(user_params)
+    byebug
     @test = "success"
     @user = User.new(user_params)
     @user.save

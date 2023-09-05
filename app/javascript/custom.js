@@ -76,17 +76,17 @@ $(document).ready(function() {
         }
         UserDetails.role = role;
         console.log(UserDetails);
-        $('#user_detail_name').html(UserDetails.name);
-        $('#user_detail_role').html(UserDetails.role);
-        $('#user_detail_email').html(UserDetails.email);
-        $('#user_detail_phone').html(UserDetails.phone);
-        $('#user_detail_dob').html(UserDetails.dob);
-        $('#user_detail_address').html(UserDetails.address);
-        $('#user_detail_cd').html(UserDetails.cd);
-        $('#user_detail_cu').html(UserDetails.cu);
-        $('#user_detail_ud').html(UserDetails.ud);
-        $('#user_detail_uu').html(UserDetails.uu);
-        $('#profile_img').attr('src', UserDetails.avatar);
+            $('#user_detail_name').html(UserDetails.name);
+            $('#user_detail_role').html(UserDetails.role);
+            $('#user_detail_email').html(UserDetails.email);
+            $('#user_detail_phone').html(UserDetails.phone);
+            $('#user_detail_dob').html(UserDetails.dob);
+            $('#user_detail_address').html(UserDetails.address);
+            $('#user_detail_cd').html(UserDetails.cd);
+            $('#user_detail_cu').html(UserDetails.cu);
+            $('#user_detail_ud').html(UserDetails.ud);
+            $('#user_detail_uu').html(UserDetails.uu);
+            $('#profile_img').attr('src', UserDetails.avatar);
     }
 
 function showDeleteUserDetails(userObject) {
